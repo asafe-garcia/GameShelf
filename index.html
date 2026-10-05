@@ -25,7 +25,68 @@
 
   <main>
 
-    <!-- PESQUISA, FILTRO E ORDENAÇÃO (commit ) -->
+
+    <section id="pesquisa" aria-labelledby="titulo-pesquisa">
+      <h2 id="titulo-pesquisa">Pesquisar, filtrar e ordenar</h2>
+
+      <form action="#" method="get">
+        <p>
+          <label for="busca">Buscar por título</label>
+          <input type="search" id="busca" name="busca" placeholder="Ex.: Hollow Knight">
+        </p>
+
+        <p>
+          <label for="filtro-plataforma">Plataforma</label>
+          <select id="filtro-plataforma" name="plataforma">
+            <option value="">Todas</option>
+            <option value="pc">PC</option>
+            <option value="ps5">PlayStation 5</option>
+            <option value="xbox">Xbox Series X/S</option>
+            <option value="switch">Nintendo Switch</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="filtro-genero">Gênero</label>
+          <select id="filtro-genero" name="genero">
+            <option value="">Todos</option>
+            <option value="acao">Ação</option>
+            <option value="aventura">Aventura</option>
+            <option value="rpg">RPG</option>
+            <option value="estrategia">Estratégia</option>
+            <option value="plataforma">Plataforma</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="filtro-status">Status</label>
+          <select id="filtro-status" name="status">
+            <option value="">Todos</option>
+            <option value="quero-jogar">Quero jogar</option>
+            <option value="jogando">Jogando</option>
+            <option value="concluido">Concluído</option>
+            <option value="abandonado">Abandonado</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="ordenar">Ordenar por</label>
+          <select id="ordenar" name="ordenar">
+            <option value="titulo-asc">Título (A–Z)</option>
+            <option value="titulo-desc">Título (Z–A)</option>
+            <option value="ano-desc">Ano (mais recente)</option>
+            <option value="ano-asc">Ano (mais antigo)</option>
+            <option value="nota-desc">Nota (maior)</option>
+            <option value="nota-asc">Nota (menor)</option>
+          </select>
+        </p>
+
+        <p>
+          <button type="submit">Aplicar</button>
+          <button type="reset">Limpar filtros</button>
+        </p>
+      </form>
+    </section>
 
     <section id="colecao" aria-labelledby="titulo-colecao">
       <h2 id="titulo-colecao">Minha coleção</h2>
