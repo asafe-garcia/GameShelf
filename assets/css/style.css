@@ -377,3 +377,67 @@ td button:hover,
 #detalhes dd {
   margin: 0;
 }
+
+@media (max-width: 900px) {
+  .layout-colecao {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "pesquisa"
+      "colecao"
+      "detalhes";
+  }
+}
+
+@media (max-width: 600px) {
+  body > header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  main {
+    padding: 12px;
+  }
+
+  main section,
+  main aside {
+    padding: 12px;
+  }
+
+  nav a {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  #detalhes article {
+    grid-template-columns: 1fr;
+  }
+
+  #detalhes article > header,
+  #detalhes article > footer {
+    grid-column: 1;
+  }
+
+  #detalhes figure {
+    max-width: 200px;
+  }
+
+  #detalhes dl {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  #detalhes dd {
+    margin-bottom: 8px;
+  }
+
+  body > footer {
+    flex-direction: column;
+    padding: 16px;
+  }
+}
