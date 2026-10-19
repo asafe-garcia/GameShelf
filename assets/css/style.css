@@ -1,1 +1,124 @@
-/* Estilos serão desenvolvidos nas próximas etapas */
+/* ===== Base ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #222222;
+  background-color: #f2f2f7;
+}
+
+h1, h2, h3 {
+  margin: 0 0 8px;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: #4a2fbd;
+}
+
+a:hover {
+  color: #2d1a80;
+}
+
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+body > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 20px 32px;
+  color: #ffffff;
+  background-color: #1b1b3a;
+}
+
+body > header p {
+  margin: 0;
+  color: #d0d0f0;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav a {
+  display: block;
+  padding: 8px 16px;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 20px;
+}
+
+nav a:hover {
+  background-color: #4a2fbd;
+  color: #ffffff;
+}
+
+nav a[aria-current="page"] {
+  background-color: #ffffff;
+  color: #1b1b3a;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+main section,
+main aside {
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #d0d0dd;
+  border-radius: 8px;
+}
+
+main h2 {
+  padding-bottom: 8px;
+  border-bottom: 3px solid #4a2fbd;
+}
+
+body > footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 32px;
+  font-size: 14px;
+  color: #d0d0f0;
+  background-color: #1b1b3a;
+}
+
+body > footer p {
+  margin: 0;
+}
+
+body > footer a {
+  color: #ffffff;
+}
