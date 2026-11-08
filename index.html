@@ -8,6 +8,7 @@
   <title>GameShelf | Minha coleção</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <script src="assets/js/dados.js" defer></script>
+  <script src="assets/js/index.js" defer></script>
 </head>
 
 <body>
@@ -92,7 +93,7 @@
 
     <section id="colecao" aria-labelledby="titulo-colecao">
       <h2 id="titulo-colecao">Minha coleção</h2>
-      <p class="mensagem info">Exibindo 4 jogos.</p>
+      <p id="contagem" class="mensagem info" role="status"></p>
 
       <table>
         <caption>Jogos cadastrados na coleção</caption>
@@ -108,64 +109,7 @@
             <th scope="col">Ações</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><img src="assets/img/hollow.jpg" alt="Capa de Hollow Knight" width="60"></td>
-            <th scope="row">Hollow Knight</th>
-            <td>PC</td>
-            <td>Aventura</td>
-            <td>2017</td>
-            <td>Concluído</td>
-            <td>9,5</td>
-            <td>
-              <a href="#detalhes">Ver detalhes</a>
-              <a href="pages/cadastro.html">Editar</a>
-              <button type="button">Excluir</button>
-            </td>
-          </tr>
-          <tr>
-            <td><img src="assets/img/TW3_Wild_Hunt.png" alt="Capa de The Witcher 3" width="60"></td>
-            <th scope="row">The Witcher 3: Wild Hunt</th>
-            <td>PlayStation 5</td>
-            <td>RPG</td>
-            <td>2015</td>
-            <td>Jogando</td>
-            <td>10</td>
-            <td>
-              <a href="#detalhes">Ver detalhes</a>
-              <a href="pages/cadastro.html">Editar</a>
-              <button type="button">Excluir</button>
-            </td>
-          </tr>
-          <tr>
-            <td><img src="assets/img/Celeste_box_art_cropped.png" alt="Capa de Celeste" width="60"></td>
-            <th scope="row">Celeste</th>
-            <td>Nintendo Switch</td>
-            <td>Plataforma</td>
-            <td>2018</td>
-            <td>Concluído</td>
-            <td>9,0</td>
-            <td>
-              <a href="#detalhes">Ver detalhes</a>
-              <a href="pages/cadastro.html">Editar</a>
-              <button type="button">Excluir</button>
-            </td>
-          </tr>
-          <tr>
-            <td><img src="assets/img/Capa_do_jogo_Age_of_Empires_IV.jpg" alt="Capa de Age of Empires IV" width="60"></td>
-            <th scope="row">Age of Empires IV</th>
-            <td>PC</td>
-            <td>Estratégia</td>
-            <td>2021</td>
-            <td>Quero jogar</td>
-            <td>—</td>
-            <td>
-              <a href="#detalhes">Ver detalhes</a>
-              <a href="pages/cadastro.html">Editar</a>
-              <button type="button">Excluir</button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody id="lista-jogos"></tbody>
       </table>
     </section>
 

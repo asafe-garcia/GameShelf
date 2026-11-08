@@ -284,6 +284,8 @@ tbody tr:hover {
 
 td img {
   width: 60px;
+  height: 80px;
+  object-fit: cover;
   border-radius: 4px;
 }
 
