@@ -192,3 +192,82 @@ function iniciarModoEdicao() {
 }
 
 iniciarModoEdicao();
+
+// ===== Busca na API (CheapShark) =====
+const formularioApi = document.getElementById("form-api");
+const campoTermoApi = document.getElementById("busca-api-termo");
+const statusApi = document.getElementById("status-api");
+const listaResultados = document.getElementById("resultados-api");
+let resultadosApi = [];
+
+function mostrarStatusApi(tipo, texto) {
+  statusApi.className = "mensagem " + tipo;
+  statusApi.textContent = texto;
+  statusApi.hidden = false;
+}
+
+function criarCartaoResultado(jogo) {
+  const cartao = criar("li");
+  cartao.append(
+    criarImagem(obterCapaApi(jogo), "Capa de " + jogo.external, 220),
+    criar("h3", jogo.external),
+    criar("p", "Menor preço atual: US$ " + jogo.cheapest),
+    criar("button", "Usar este jogo", { type: "button", "data-id": jogo.gameID })
+  );
+  return cartao;
+}
+
+function mostrarResultadosApi() {
+  listaResultados.replaceChildren();
+
+  if (resultadosApi.length === 0) {
+    mostrarStatusApi("info", "Nenhum jogo encontrado para essa pesquisa.");
+    return;
+  }
+
+  mostrarStatusApi("info", `${resultadosApi.length} resultado(s). Escolha um para preencher o formulário.`);
+  for (const jogo of resultadosApi) {
+    listaResultados.append(criarCartaoResultado(jogo));
+  }
+}
+
+formularioApi.addEventListener("submit", async function (evento) {
+  evento.preventDefault();
+  const termo = campoTermoApi.value.trim();
+
+  if (termo.length < 2) {
+    mostrarStatusApi("erro", "Digite pelo menos 2 caracteres para pesquisar.");
+    return;
+  }
+
+  mostrarStatusApi("info", "Buscando...");
+  listaResultados.replaceChildren();
+
+  try {
+    resultadosApi = await buscarJogosApi(termo);
+    mostrarResultadosApi();
+  } catch (erro) {
+    if (erro instanceof TypeError) {
+      mostrarStatusApi("erro", "Não foi possível conectar à API. Verifique sua internet.");
+    } else {
+      mostrarStatusApi("erro", erro.message);
+    }
+  }
+});
+
+// Ao escolher um resultado, preenche o formulário com os dados da API
+listaResultados.addEventListener("click", function (evento) {
+  const botao = evento.target.closest("button[data-id]");
+  if (!botao) {
+    return;
+  }
+
+  const jogo = resultadosApi.find(function (item) {
+    return item.gameID === botao.dataset.id;
+  });
+
+  limparErros();
+  preencherFormulario(converterJogoApi(jogo));
+  mostrarStatusApi("sucesso", "Dados importados! Escolha o gênero, o ano e o status, confira os campos e salve.");
+  formulario.scrollIntoView({ behavior: "smooth" });
+});

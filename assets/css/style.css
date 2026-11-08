@@ -456,3 +456,50 @@ td button:hover,
   margin: 8px 0 0;
   padding-left: 20px;
 }
+
+/* ===== Busca na API (RAWG) ===== */
+#busca-api {
+  margin-bottom: 24px;
+}
+
+.resultados-api {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resultados-api li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background-color: #fafaff;
+  border: 1px solid #d0d0dd;
+  border-radius: 8px;
+}
+
+.resultados-api img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.resultados-api h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.resultados-api p {
+  margin: 0;
+  font-size: 14px;
+  color: #555555;
+}
+
+.resultados-api button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

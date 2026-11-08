@@ -7,6 +7,7 @@
   <title>GameShelf | Cadastrar jogo</title>
   <link rel="stylesheet" href="../assets/css/style.css">
   <script src="../assets/js/dados.js" defer></script>
+  <script src="../assets/js/api.js" defer></script>
   <script src="../assets/js/cadastro.js" defer></script>
 </head>
 <body data-raiz="../">
@@ -26,7 +27,26 @@
   </header>
 
   <main>
-    <section aria-labelledby="titulo-cadastro">
+
+      <section id="busca-api" aria-labelledby="titulo-api">
+      <h2 id="titulo-api">Buscar jogo na internet</h2>
+      <p>Pesquise um jogo e clique em "Usar este jogo" para preencher o formulário automaticamente.</p>
+
+      <form id="form-api" action="#">
+        <p>
+          <label for="busca-api-termo">Nome do jogo</label>
+          <input type="search" id="busca-api-termo" name="termo" placeholder="Ex.: Hades">
+        </p>
+        <p>
+          <button type="submit">Buscar jogo</button>
+        </p>
+      </form>
+
+      <p id="status-api" role="status" hidden></p>
+      <ul id="resultados-api" class="resultados-api"></ul>
+    </section>
+
+    <section id="cadastro" aria-labelledby="titulo-cadastro">
       <h2 id="titulo-cadastro">Cadastrar jogo</h2>
       <p>Campos marcados com * são obrigatórios. Este mesmo formulário será usado para editar um jogo.</p>
       <div id="mensagem" role="status" hidden></div>
@@ -124,6 +144,7 @@
 
   <footer>
     <p>&copy; 2026 GameShelf · Projeto acadêmico</p>
+    <p>Dados de jogos fornecidos pela <a href="https://apidocs.cheapshark.com" target="_blank" rel="noopener">CheapShark API</a>.</p>
   </footer>
 
 </body>
