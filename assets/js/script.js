@@ -1,1 +1,0 @@
-// Funcionalidades serão implementadas nas próximas etapas
