@@ -33,8 +33,7 @@
 <main class="layout-colecao">
 
   <section id="pesquisa" aria-labelledby="titulo-pesquisa">
-    <h2 id="titulo-pesquisa">Pesquisar, filtrar e ordenar</h2>
-
+  <h2 id="titulo-pesquisa" class="so-leitor">Pesquisar, filtrar e ordenar</h2>
     <form id="form-pesquisa" action="#" method="get">
       <p>
         <label for="busca">Buscar por título</label>
@@ -99,22 +98,7 @@
       <p id="feedback" class="mensagem sucesso" role="status" hidden></p>
       <p id="contagem" class="mensagem info" role="status"></p>
 
-      <table>
-        <caption>Jogos cadastrados na coleção</caption>
-        <thead>
-          <tr>
-            <th scope="col">Capa</th>
-            <th scope="col">Título</th>
-            <th scope="col">Plataforma</th>
-            <th scope="col">Gênero</th>
-            <th scope="col">Ano</th>
-            <th scope="col">Status</th>
-            <th scope="col">Nota</th>
-            <th scope="col">Ações</th>
-          </tr>
-        </thead>
-        <tbody id="lista-jogos"></tbody>
-      </table>
+      <ul id="lista-jogos" class="estante"></ul>
     </section>
 
     <aside id="detalhes" aria-labelledby="titulo-detalhes">

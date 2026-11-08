@@ -11,31 +11,39 @@ function formatarNota(nota) {
   return nota === null ? "—" : String(nota).replace(".", ",");
 }
 
-function criarLinha(jogo) {
-  const linha = criar("tr");
+function criarCartao(jogo) {
+  const cartao = criar("li", null, { class: "cartao", "data-status": jogo.status, "data-id": jogo.id });
+  if (jogo.id === jogoSelecionadoId) {
+    cartao.classList.add("selecionado");
+  }
 
-  const celulaCapa = criar("td");
-  celulaCapa.append(criarImagem(jogo.capa, "Capa de " + jogo.titulo, 60));
+  const botaoCapa = criar("button", null, {
+    type: "button", class: "cartao-capa", "data-acao": "detalhes", "data-id": jogo.id,
+    "aria-label": "Ver detalhes de " + jogo.titulo
+  });
+  botaoCapa.append(criarImagem(jogo.capa, "", 300));
+  if (jogo.nota !== null) {
+    botaoCapa.append(criar("span", formatarNota(jogo.nota), { class: "nota", title: "Nota" }));
+  }
 
-  const celulaAcoes = criar("td");
-  celulaAcoes.append(
-    criar("a", "Ver detalhes", { href: "#detalhes", "data-acao": "detalhes", "data-id": jogo.id }),
+  const meta = criar("p", null, { class: "meta" });
+  meta.append(criar("span", nomeDe("plataforma", jogo.plataforma)), criar("span", jogo.ano));
+
+  const info = criar("div", null, { class: "cartao-info" });
+  info.append(
+    criar("h3", jogo.titulo),
+    meta,
+    criar("p", nomeDe("status", jogo.status), { class: "status" })
+  );
+
+  const acoes = criar("div", null, { class: "cartao-acoes" });
+  acoes.append(
     criar("a", "Editar", { href: RAIZ + "pages/cadastro.html?id=" + jogo.id }),
     criar("button", "Excluir", { type: "button", "data-acao": "excluir", "data-id": jogo.id })
   );
 
-  linha.append(
-    celulaCapa,
-    criar("th", jogo.titulo, { scope: "row" }),
-    criar("td", nomeDe("plataforma", jogo.plataforma)),
-    criar("td", nomeDe("genero", jogo.genero)),
-    criar("td", jogo.ano),
-    criar("td", nomeDe("status", jogo.status)),
-    criar("td", formatarNota(jogo.nota)),
-    celulaAcoes
-  );
-
-  return linha;
+  cartao.append(botaoCapa, info, acoes);
+  return cartao;
 }
 
 // Aplica pesquisa, filtros e ordenação sobre a lista de jogos
@@ -75,15 +83,13 @@ function renderizarLista() {
   corpoLista.replaceChildren();
 
   if (lista.length === 0) {
-    const linhaVazia = criar("tr");
-    linhaVazia.append(criar("td", "Nenhum jogo encontrado.", { colspan: 8 }));
-    corpoLista.append(linhaVazia);
+      corpoLista.append(criar("li", "Nenhum jogo encontrado. Tente mudar os filtros ou cadastre um novo jogo.", { class: "vazio" }));
   } else {
     for (const jogo of lista) {
-      corpoLista.append(criarLinha(jogo));
+      corpoLista.append(criarCartao(jogo));
     }
   }
-
+  
   contagem.textContent = `Exibindo ${lista.length} de ${jogos.length} jogo(s).`;
 }
 
@@ -91,8 +97,15 @@ function renderizarLista() {
 const painelDetalhe = document.getElementById("detalhe-conteudo");
 let jogoSelecionadoId = null;
 
+function marcarSelecionado() {
+  for (const cartao of corpoLista.children) {
+    cartao.classList.toggle("selecionado", Number(cartao.dataset.id) === jogoSelecionadoId);
+  }
+}
+
 function mostrarDetalheVazio() {
   jogoSelecionadoId = null;
+  marcarSelecionado();
   painelDetalhe.replaceChildren(
     criar("p", "Selecione um jogo na lista para ver os detalhes.", { class: "mensagem info" })
   );
@@ -109,6 +122,7 @@ function mostrarDetalhes(id) {
   }
 
   jogoSelecionadoId = id;
+  marcarSelecionado();
 
   const cabecalho = criar("header");
   cabecalho.append(
@@ -146,7 +160,13 @@ function mostrarDetalhes(id) {
   const artigo = criar("article");
   artigo.append(cabecalho, figura, lista, rodape);
   painelDetalhe.replaceChildren(artigo);
+
+  // Em telas pequenas o painel fica abaixo da lista, então rola até ele
+  if (window.matchMedia("(max-width: 960px)").matches) {
+    painelDetalhe.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
+
 
 // Um só ouvinte para os botões da tabela e do painel de detalhes
 function tratarCliqueAcoes(evento) {
