@@ -60,5 +60,84 @@ function renderizarLista() {
   contagem.textContent = `Exibindo ${lista.length} de ${jogos.length} jogo(s).`;
 }
 
+// ===== Detalhes =====
+const painelDetalhe = document.getElementById("detalhe-conteudo");
+let jogoSelecionadoId = null;
+
+function mostrarDetalheVazio() {
+  jogoSelecionadoId = null;
+  painelDetalhe.replaceChildren(
+    criar("p", "Selecione um jogo na lista para ver os detalhes.", { class: "mensagem info" })
+  );
+}
+
+function mostrarDetalhes(id) {
+  const jogo = jogos.find(function (item) {
+    return item.id === id;
+  });
+
+  if (!jogo) {
+    mostrarDetalheVazio();
+    return;
+  }
+
+  jogoSelecionadoId = id;
+
+  const cabecalho = criar("header");
+  cabecalho.append(
+    criar("h3", jogo.titulo),
+    criar("p", (jogo.desenvolvedora || "Desenvolvedora não informada") + " · " + jogo.ano)
+  );
+
+  const figura = criar("figure");
+  figura.append(
+    criarImagem(jogo.capa, "Capa de " + jogo.titulo, 200),
+    criar("figcaption", "Capa do jogo")
+  );
+
+  const itens = [
+    ["Plataforma", nomeDe("plataforma", jogo.plataforma)],
+    ["Gênero", nomeDe("genero", jogo.genero)],
+    ["Desenvolvedora", jogo.desenvolvedora || "Não informada"],
+    ["Ano de lançamento", jogo.ano],
+    ["Status", nomeDe("status", jogo.status)],
+    ["Nota", jogo.nota === null ? "Sem nota" : formatarNota(jogo.nota) + " / 10"],
+    ["Descrição", jogo.descricao || "Sem descrição."]
+  ];
+
+  const lista = criar("dl");
+  for (const [rotulo, valor] of itens) {
+    lista.append(criar("dt", rotulo), criar("dd", valor));
+  }
+
+  const rodape = criar("footer");
+  rodape.append(
+    criar("a", "Editar", { href: RAIZ + "pages/cadastro.html?id=" + jogo.id }),
+    criar("button", "Excluir", { type: "button", "data-acao": "excluir", "data-id": jogo.id })
+  );
+
+  const artigo = criar("article");
+  artigo.append(cabecalho, figura, lista, rodape);
+  painelDetalhe.replaceChildren(artigo);
+}
+
+// Um só ouvinte para os botões da tabela e do painel de detalhes
+function tratarCliqueAcoes(evento) {
+  const alvo = evento.target.closest("[data-acao]");
+  if (!alvo) {
+    return;
+  }
+
+  const id = Number(alvo.dataset.id);
+
+  if (alvo.dataset.acao === "detalhes") {
+    mostrarDetalhes(id);
+  }
+}
+
+corpoLista.addEventListener("click", tratarCliqueAcoes);
+painelDetalhe.addEventListener("click", tratarCliqueAcoes);
+
 // ===== Inicialização =====
 renderizarLista();
+mostrarDetalheVazio();
