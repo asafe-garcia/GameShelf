@@ -270,6 +270,325 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* ===== Página inicial ===== */
+.layout-colecao {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  grid-template-areas: "pesquisa pesquisa" "colecao detalhes";
+  gap: 24px 32px;
+  align-items: start;
+}
+
+#pesquisa {
+  grid-area: pesquisa;
+}
+
+#colecao {
+  grid-area: colecao;
+}
+
+#detalhes {
+  grid-area: detalhes;
+}
+
+#pesquisa {
+  padding: 16px;
+  background-color: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+}
+
+#form-pesquisa {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px 16px;
+  align-items: end;
+}
+
+#form-pesquisa p {
+  margin: 0;
+}
+
+#form-pesquisa p:first-child {
+  grid-column: span 2;
+}
+
+#form-pesquisa p:last-child {
+  display: flex;
+  gap: 8px;
+}
+
+#colecao h2 {
+  font-size: 28px;
+}
+
+#contagem {
+  margin: 0 0 20px;
+  padding: 0;
+  color: var(--suave);
+  background: none;
+  border: 0;
+}
+
+#feedback {
+  margin-bottom: 16px;
+}
+
+/* Estante de capas */
+.estante {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.estante>.vazio {
+  grid-column: 1 / -1;
+  color: var(--suave);
+}
+
+.cartao {
+  --cor-status: var(--suave);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: 12px;
+}
+
+.cartao[data-status="quero-jogar"] {
+  --cor-status: var(--quero-jogar);
+}
+
+.cartao[data-status="jogando"] {
+  --cor-status: var(--jogando);
+}
+
+.cartao[data-status="concluido"] {
+  --cor-status: var(--concluido);
+}
+
+.cartao[data-status="abandonado"] {
+  --cor-status: var(--abandonado);
+}
+
+.cartao.selecionado {
+  border-color: var(--destaque);
+  box-shadow: 0 0 0 2px var(--destaque);
+}
+
+.cartao-capa {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background-color: #000;
+  border: 0;
+  border-radius: 0;
+}
+
+.cartao-capa:hover {
+  background-color: #000;
+}
+
+.cartao-capa img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.cartao-capa:hover img {
+  transform: scale(1.05);
+}
+
+.nota {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-width: 38px;
+  padding: 4px 8px;
+  font-family: var(--fonte-titulo);
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  color: var(--sobre-destaque);
+  background-color: var(--destaque);
+  border-radius: 999px;
+}
+
+.cartao-info {
+  padding: 12px 14px 10px;
+  flex: 1;
+}
+
+.cartao-info h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--suave);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.status::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--cor-status);
+}
+
+.cartao-acoes {
+  display: flex;
+  border-top: 1px solid var(--linha);
+}
+
+.cartao-acoes a,
+.cartao-acoes button {
+  flex: 1;
+  margin: 0;
+  padding: 9px 4px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  color: var(--suave);
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.cartao-acoes a+button {
+  border-left: 1px solid var(--linha);
+}
+
+.cartao-acoes a:hover {
+  color: var(--sobre-destaque);
+  background-color: var(--destaque);
+}
+
+.cartao-acoes button:hover {
+  color: #fff;
+  background-color: #c8364d;
+}
+
+/* Painel de detalhes */
+#detalhes {
+  position: sticky;
+  top: 16px;
+  padding: 20px;
+  background-color: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+}
+
+#detalhes h2 {
+  font-size: 20px;
+}
+
+#detalhes article {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#detalhes article>header h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+#detalhes article>header p {
+  margin: 4px 0 0;
+  color: var(--suave);
+}
+
+#detalhes figure {
+  margin: 0;
+}
+
+#detalhes figure img {
+  display: block;
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+#detalhes figcaption {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--suave);
+}
+
+#detalhes dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 16px;
+  margin: 0;
+}
+
+#detalhes dt {
+  font-size: 14px;
+  color: var(--suave);
+}
+
+#detalhes dd {
+  margin: 0;
+}
+
+#detalhes footer {
+  display: flex;
+  gap: 8px;
+}
+
+#detalhes footer a,
+#detalhes footer button {
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--texto);
+  background: none;
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+}
+
+#detalhes footer a:hover {
+  color: var(--sobre-destaque);
+  background-color: var(--destaque);
+  border-color: var(--destaque);
+}
+
+#detalhes footer button:hover {
+  color: #fff;
+  background-color: #c8364d;
+  border-color: #c8364d;
+}
+
 /* ===== Página de cadastro ===== */
 body[data-raiz] main {
   max-width: 760px;
