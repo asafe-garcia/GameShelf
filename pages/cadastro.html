@@ -7,6 +7,7 @@
   <title>GameShelf | Cadastrar jogo</title>
   <link rel="stylesheet" href="../assets/css/style.css">
   <script src="../assets/js/dados.js" defer></script>
+  <script src="../assets/js/cadastro.js" defer></script>
 </head>
 <body data-raiz="../">
 
@@ -28,10 +29,9 @@
     <section aria-labelledby="titulo-cadastro">
       <h2 id="titulo-cadastro">Cadastrar jogo</h2>
       <p>Campos marcados com * são obrigatórios. Este mesmo formulário será usado para editar um jogo.</p>
-      <p class="mensagem sucesso">Jogo salvo com sucesso! (exemplo de mensagem)</p>
-      <p class="mensagem erro">Preencha todos os campos obrigatórios. (exemplo de mensagem)</p>
+      <div id="mensagem" role="status" hidden></div>
 
-      <form action="#" method="post">
+      <form id="form-jogo" action="#" method="post" novalidate>
 
         <fieldset>
           <legend>Informações básicas</legend>

@@ -445,3 +445,14 @@ td button:hover,
     padding: 16px;
   }
 }
+
+/* ===== Validação e mensagens do JavaScript ===== */
+[aria-invalid="true"] {
+  border-color: #b42318;
+  background-color: #fff5f4;
+}
+
+.mensagem ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
