@@ -132,12 +132,61 @@ function tratarCliqueAcoes(evento) {
 
   if (alvo.dataset.acao === "detalhes") {
     mostrarDetalhes(id);
+  } else if (alvo.dataset.acao === "excluir") {
+    excluirJogo(id);
   }
 }
 
 corpoLista.addEventListener("click", tratarCliqueAcoes);
 painelDetalhe.addEventListener("click", tratarCliqueAcoes);
 
+// ===== Exclusão e mensagens =====
+const feedback = document.getElementById("feedback");
+let temporizadorFeedback = null;
+
+function mostrarFeedback(texto) {
+  feedback.textContent = texto;
+  feedback.hidden = false;
+
+  clearTimeout(temporizadorFeedback);
+  temporizadorFeedback = setTimeout(function () {
+    feedback.hidden = true;
+  }, 4000);
+}
+
+function excluirJogo(id) {
+  const jogo = jogos.find(function (item) {
+    return item.id === id;
+  });
+
+  if (!jogo || !confirm(`Excluir "${jogo.titulo}" da coleção?`)) {
+    return;
+  }
+
+  jogos = jogos.filter(function (item) {
+    return item.id !== id;
+  });
+  salvarJogos(jogos);
+
+  if (jogoSelecionadoId === id) {
+    mostrarDetalheVazio();
+  }
+
+  renderizarLista();
+  mostrarFeedback(`"${jogo.titulo}" foi excluído da coleção.`);
+}
+
+// Depois de editar, a página de cadastro volta para cá com ?msg=editado
+function mostrarMensagemDaUrl() {
+  const parametros = new URLSearchParams(window.location.search);
+
+  if (parametros.get("msg") === "editado") {
+    mostrarFeedback("Jogo atualizado com sucesso!");
+    history.replaceState(null, "", window.location.pathname);
+  }
+}
+
 // ===== Inicialização =====
 renderizarLista();
 mostrarDetalheVazio();
+mostrarMensagemDaUrl();

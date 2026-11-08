@@ -2,6 +2,7 @@
 
 // ===== Estado e elementos =====
 let jogos = carregarJogos();
+let jogoEmEdicao = null;
 
 const formulario = document.getElementById("form-jogo");
 const caixaMensagem = document.getElementById("mensagem");
@@ -122,14 +123,72 @@ formulario.addEventListener("submit", function (evento) {
   limparErros();
 
   const dados = lerFormulario();
-  const erros = validarJogo(dados, null);
+  const idAtual = jogoEmEdicao ? jogoEmEdicao.id : null;
+  const erros = validarJogo(dados, idAtual);
 
   if (erros.length > 0) {
     mostrarErros(erros);
     return;
   }
 
-  cadastrarJogo(dados);
+  if (jogoEmEdicao) {
+    atualizarJogo(dados);
+  } else {
+    cadastrarJogo(dados);
+  }
 });
 
 formulario.addEventListener("reset", limparErros);
+
+// ===== Edição =====
+// Coloca os dados de um jogo nos campos do formulário
+function preencherFormulario(jogo) {
+  formulario.elements["titulo"].value = jogo.titulo || "";
+  formulario.elements["plataforma"].value = jogo.plataforma || "";
+  formulario.elements["genero"].value = jogo.genero || "";
+  formulario.elements["ano"].value = jogo.ano || "";
+  formulario.elements["desenvolvedora"].value = jogo.desenvolvedora || "";
+  formulario.elements["nota"].value = jogo.nota === null || jogo.nota === undefined ? "" : jogo.nota;
+  formulario.elements["descricao"].value = jogo.descricao || "";
+  formulario.elements["capa"].value = jogo.capa || "";
+
+  if (jogo.status) {
+    formulario.elements["status"].value = jogo.status;
+  }
+}
+
+function atualizarJogo(dados) {
+  const posicao = jogos.findIndex(function (jogo) {
+    return jogo.id === jogoEmEdicao.id;
+  });
+
+  jogos[posicao] = { ...jogoEmEdicao, ...dados };
+  salvarJogos(jogos);
+
+  window.location.href = "../index.html?msg=editado";
+}
+
+// Se a URL tiver ?id=123, o formulário entra em modo de edição
+function iniciarModoEdicao() {
+  const parametros = new URLSearchParams(window.location.search);
+  if (!parametros.has("id")) {
+    return;
+  }
+
+  const id = Number(parametros.get("id"));
+  jogoEmEdicao = jogos.find(function (jogo) {
+    return jogo.id === id;
+  }) || null;
+
+  if (jogoEmEdicao === null) {
+    mostrarMensagem("erro", "Jogo não encontrado. Você pode cadastrá-lo como um novo jogo.");
+    return;
+  }
+
+  document.title = "GameShelf | Editar jogo";
+  document.getElementById("titulo-cadastro").textContent = "Editar jogo";
+  formulario.querySelector('button[type="submit"]').textContent = "Salvar alterações";
+  preencherFormulario(jogoEmEdicao);
+}
+
+iniciarModoEdicao();
