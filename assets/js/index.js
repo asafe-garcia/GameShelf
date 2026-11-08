@@ -38,11 +38,38 @@ function criarLinha(jogo) {
   return linha;
 }
 
-// Por enquanto mostra todos os jogos (o commit de filtros altera esta função)
+// Aplica pesquisa, filtros e ordenação sobre a lista de jogos
 function obterJogosVisiveis() {
-  return jogos;
-}
+  const termo = normalizar(campoBusca.value);
 
+  const lista = jogos.filter(function (jogo) {
+    const bateBusca = normalizar(jogo.titulo).includes(termo);
+    const batePlataforma = filtroPlataforma.value === "" || jogo.plataforma === filtroPlataforma.value;
+    const bateGenero = filtroGenero.value === "" || jogo.genero === filtroGenero.value;
+    const bateStatus = filtroStatus.value === "" || jogo.status === filtroStatus.value;
+    return bateBusca && batePlataforma && bateGenero && bateStatus;
+  });
+
+  const [campo, direcao] = campoOrdenar.value.split("-");
+
+  lista.sort(function (a, b) {
+    let resultado = 0;
+
+    if (campo === "titulo") {
+      resultado = a.titulo.localeCompare(b.titulo, "pt-BR");
+    } else if (campo === "ano") {
+      resultado = a.ano - b.ano;
+    } else if (campo === "nota") {
+      const notaA = a.nota === null ? -1 : a.nota;
+      const notaB = b.nota === null ? -1 : b.nota;
+      resultado = notaA - notaB;
+    }
+
+    return direcao === "asc" ? resultado : -resultado;
+  });
+
+  return lista;
+}
 function renderizarLista() {
   const lista = obterJogosVisiveis();
   corpoLista.replaceChildren();
@@ -185,6 +212,27 @@ function mostrarMensagemDaUrl() {
     history.replaceState(null, "", window.location.pathname);
   }
 }
+
+// ===== Pesquisa, filtros e ordenação =====
+const formPesquisa = document.getElementById("form-pesquisa");
+const campoBusca = document.getElementById("busca");
+const filtroPlataforma = document.getElementById("filtro-plataforma");
+const filtroGenero = document.getElementById("filtro-genero");
+const filtroStatus = document.getElementById("filtro-status");
+const campoOrdenar = document.getElementById("ordenar");
+
+// Atualiza a lista enquanto o usuário digita ou muda um campo
+formPesquisa.addEventListener("input", renderizarLista);
+
+formPesquisa.addEventListener("submit", function (evento) {
+  evento.preventDefault();
+  renderizarLista();
+});
+
+// O reset limpa os campos depois do evento, por isso o setTimeout
+formPesquisa.addEventListener("reset", function () {
+  setTimeout(renderizarLista, 0);
+});
 
 // ===== Inicialização =====
 renderizarLista();
